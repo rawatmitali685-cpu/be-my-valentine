@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Be My Valentine 💖</title>
 
   <style>
@@ -15,57 +14,49 @@
       align-items: center;
       font-family: 'Poppins', sans-serif;
       overflow: hidden;
-      padding: 10px;
     }
 
     .card {
       background: white;
-      padding: 30px 25px;
+      padding: 45px;
       border-radius: 25px;
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      width: 100%;
-      max-width: 350px;
       position: relative;
+      width: 320px;
     }
 
     h1 {
       color: #ff4d6d;
-      font-size: 2rem;
+      font-size: 2.4rem;
       margin-bottom: 10px;
-    }
-
-    h2 {
-      font-size: 1.3rem;
     }
 
     p {
       color: #555;
-      font-size: 1rem;
-      margin-bottom: 15px;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
     }
 
     .message {
       color: #ff4d6d;
       font-weight: bold;
-      min-height: 24px;
+      min-height: 25px;
       margin-bottom: 15px;
-      font-size: 0.95rem;
     }
 
     .buttons {
       position: relative;
-      height: 140px;
+      height: 120px;
     }
 
     button {
       border: none;
-      padding: 14px 26px;
-      font-size: 1rem;
+      padding: 15px 30px;
+      font-size: 1.1rem;
       border-radius: 50px;
       cursor: pointer;
-      transition: transform 0.2s ease;
-      touch-action: manipulation;
+      transition: transform 0.3s ease;
     }
 
     #yesBtn {
@@ -77,17 +68,16 @@
       background: #ddd;
       color: #333;
       position: absolute;
-      top: 70px;
+      top: 60px;
       left: 50%;
       transform: translateX(-50%);
     }
 
     .heart {
       position: absolute;
-      font-size: 18px;
+      font-size: 20px;
       animation: fall 5s linear infinite;
       color: #ff4d6d;
-      pointer-events: none;
     }
 
     @keyframes fall {
@@ -100,19 +90,18 @@
 <body>
 
   <div class="card">
-    <h1>Hey Vinayak!! ❤️</h1>
+    <h1>Hey Love ❤️</h1>
     <p>You make my heart very happy.</p>
     <h2>Will you be my Valentine? 💘</h2>
 
     <div class="message" id="message"></div>
 
     <div class="buttons">
-      <button id="yesBtn">YES 💖</button>
-      <button id="noBtn">no 😐</button>
+      <button id="yesBtn" onclick="yesClicked()">YES 💖</button>
+      <button id="noBtn" onmouseover="moveNo()" onclick="noClicked()">no 😐</button>
     </div>
   </div>
 
-  <!-- ✅ SCRIPT MUST BE INSIDE THIS TAG -->
   <script>
     let noCount = 0;
     let yesScale = 1;
@@ -123,40 +112,11 @@
       "Babe… seriously?",
       "No is not allowed 🚫",
       "You’re testing me 😈",
+      "This is getting suspicious 🤨",
       "Just say YES already 💖"
     ];
 
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const messageBox = document.getElementById("message");
-
-    function moveNo() {
-      const x = Math.random() * 220 - 110;
-      const y = Math.random() * 90 - 45;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    }
-
-    // Desktop
-    noBtn.addEventListener("mouseover", moveNo);
-
-    // Mobile
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      moveNo();
-    });
-
-    // Click fallback
-    noBtn.addEventListener("click", () => {
-      noCount++;
-      messageBox.textContent =
-        messages[Math.min(noCount - 1, messages.length - 1)];
-
-      yesScale += 0.15;
-      yesBtn.style.transform = `scale(${yesScale})`;
-      moveNo();
-    });
-
-    yesBtn.addEventListener("click", () => {
+    function yesClicked() {
       document.body.innerHTML = `
         <div style="
           display:flex;
@@ -166,17 +126,33 @@
           background:linear-gradient(135deg,#ff9a9e,#fad0c4);
           font-family:Poppins,sans-serif;
           text-align:center;
-          color:white;
-          padding:20px;">
+          color:white;">
           <h1>
             YAYYY 💍💖<br><br>
             Best decision ever 😌<br>
             I love you ❤️
           </h1>
         </div>`;
-    });
+    }
 
-    // Floating hearts
+    function noClicked() {
+      noCount++;
+      document.getElementById("message").textContent =
+        messages[Math.min(noCount - 1, messages.length - 1)];
+
+      yesScale += 0.15;
+      document.getElementById("yesBtn").style.transform =
+        `scale(${yesScale})`;
+    }
+
+    function moveNo() {
+      const noBtn = document.getElementById("noBtn");
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 80 - 40;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    // floating hearts
     setInterval(() => {
       const heart = document.createElement("div");
       heart.classList.add("heart");
@@ -185,7 +161,7 @@
       heart.style.animationDuration = (3 + Math.random() * 2) + "s";
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 5000);
-    }, 350);
+    }, 300);
   </script>
 
 </body>
